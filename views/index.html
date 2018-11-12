@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Fucking Burger</title>
+        <meta charset="utf-8"/>
+		<link href="/css/my.css" rel="stylesheet"/>
+		<link rel="stylesheet" href="css/deli-very.css">
+		<script src="/vue/vue.js" defer></script>
+		<script src="/js/menu.js"></script>
+		<script src="/js/js_script.js"></script>
+		<script src="/socket.io/socket.io.js" defer></script>		
+		<script src="js/deli-very.js" defer></script>
+    </head>
+    <body>
+		<header>
+			<h1>Wellcome!! Bitch~</h1>
+		</header>
+		<main>
+			<section id='select_section'> <!-- Select --> 
+				<h2>Select your fucking burger</h2>
+				<p>This is you excute burger selection</p>
+				<table>
+					<thead>
+						<tr id='burger_name'>
+							<th v-for="item in items"> {{ item.name }} </th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr id='select_image'>
+							<td v-for="item in items"><img v-bind:src='"img/"+item.src' height="200" width="200"/></td>
+						</tr>
+						<tr id='select_intro'>
+							<td v-for="item in items">
+								<ul>
+								<li>{{ item.kCal }} kCal</li>
+								<li v-if="item.if_gluten">Contains gluten</li>
+								<li v-if="item.if_lactose">Contains lactose</li>
+								</ul>
+							</td>					
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr id='burger_order'>
+							<th v-for="item in items"><input type="checkbox" name="burgers" v-bind:value="item.name">Add to order</th>
+						</tr>					
+					</tfoot>
+				</table>				
+			</section>
+			
+			<section id='information_section'> <!-- Information --> 
+				<h2>Customer information</h2>
+				<p>Give me your fucking information</p>
+				<form>
+					<p>
+						<label for="fullname">Full name</label><br>
+						<input type="text" id="fullname" name="fn" required="required" placeholder="First- and Last name">
+					</p>
+					<p>
+						<label for="email">E-mail</label><br>					
+						<input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+					</p>
+					<p>
+						<label for="payment">Payment options</label><br>
+						<select id="payment" name="pay">
+							<option>Visa</option>
+							<option>Cash</option>
+							<option>Apple pay</option>
+							<option>Butt</option>
+						</select>
+					</p>
+					<p>
+						<label for="map">Indicate point</label><br>
+						<div class="view-box">
+						<div id="dots" v-on:click="displayOrder">
+							<div id="map"
+							  v-bind:style="{ left: orders.details.x + 'px', top: orders.details.y + 'px'}">
+							  {{key}}
+							</div>
+						</div>
+						</div>					
+					</p>
+					<p>
+						<label for="gender">Gender</label><br>
+						<input type="radio" name="gender" value="male" checked> Male<br>
+						<input type="radio" name="gender" value="female"> Female<br>
+						<input type="radio" name="gender" value="other"> Other
+					</p>
+					<div id='orders'>
+						<button v-on:click="markDone()" type='button'><img src="img/fuck.jpg" height="20" width="20" > Place the fucking order!!</button>
+					</div>
+				</form>
+			</section>
+			
+			<section id='be_submitted'> <!-- order --> 
+				<h2>Order confirmation <div id='success'></div></h2>
+				<h3>Customer details</h3>
+				<div id="customer_details"></div>
+				<h3>Order summary</h3>
+				<ul id="order_summary"></ul>
+			</section>
+		</main>
+		<hr>
+		<footer>
+			©2018 Fucking Burger Inc.
+			<br>
+            Author: your mother, your father, your arsehole, based on a tutorial by Anton Axelsson. November 2018.
+        </footer>
+    </body>
+</html>

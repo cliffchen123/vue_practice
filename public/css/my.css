@@ -1,0 +1,41 @@
+@import url("fonts.css");
+section {
+	margin:10px;
+}
+body > header {
+	margin:10px;
+	font-family: SansitaOne;
+	font-size: 20px;
+	color: white;
+	text-align: center;
+	background-image: url(../img/bak.jpg);
+	height: 500px;
+	line-height:500px;
+	border:1px solid gray;
+	padding:8px;
+	background:#e1efbb url(../img/bak.jpg);
+	opacity: 0.5;
+	
+}
+
+#select_section {
+	font-family: SansitaOne;
+	background-color: pink;
+	border:1px solid #FFB0F3;
+	padding:8px;
+}
+
+#information_section{
+	padding:8px;
+	font-family: SansitaOne;
+	border:3px dashed black;	
+}
+
+#select_intro {
+	vertical-align:top;
+}
+
+#success{
+	color:red;
+	display:inline;
+}
