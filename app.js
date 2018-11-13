@@ -48,6 +48,16 @@ Data.prototype.getAllOrders = function () {
   return this.orders;
 };
 
+Data.prototype.getOrderById = function (id) {
+	var order = [];
+	for(var i=0;i<this.orders.length;i++){
+		if(this.orders[i].id==id){
+			order.push(this.orders[i]);
+		}
+	}
+  return order;
+};
+
 var data = new Data();
 
 io.on('connection', function (socket) {
@@ -59,6 +69,9 @@ io.on('connection', function (socket) {
     data.addOrder(order);
     // send updated info to all connected clients, note the use of io instead of socket
     io.emit('currentQueue', { orders: data.getAllOrders() });
+	
+	// 
+	socket.emit('ordersMenu', { orders: data.getOrderById(order.id) });	
   });
 
 });

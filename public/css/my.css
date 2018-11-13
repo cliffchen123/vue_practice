@@ -39,3 +39,14 @@ body > header {
 	color:red;
 	display:inline;
 }
+
+#order_confirmation_table{
+	text-align: left;
+
+}
+
+#order_summary > th > ul{
+	text-align: left;
+	margin-left:5px;
+	padding-left:5px;
+}

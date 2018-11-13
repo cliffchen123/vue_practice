@@ -71,15 +71,46 @@ window.onload = function () {
 			items: burgers_props
 		}
 	});	
+	
+	var customer_details_view = new Vue({
+		el: '#customer_details',
+		data:{
+			items: []
+		},		
+		created: function () {
+			socket.on('ordersMenu', function (data) {
+				this.items = data.orders;
+			}.bind(this));
+		}
 
+	});	
+	
+	var order_summary_view = new Vue({
+		el: '#order_summary',
+		data:{
+			items: []
+		},		
+		created: function () {
+			socket.on('ordersMenu', function (data) {
+				burgers = [];
+				for(var i=0;i<data.orders.length;i++){
+					burgers.push(data.orders[i].orderItems);
+				}
+				this.items = burgers;
+			}.bind(this));
+		}
 
+	});	
+	
+	var customer_details_list = [];
+	var burgers_list = [];
 	var burger_submit = new Vue({
 		el: '#orders',
 		methods: {
 			markDone: function() {
 				
-				document.getElementById('customer_details').innerHTML="";
-				document.getElementById('order_summary').innerHTML="";
+				// document.getElementById('customer_details').innerHTML="";
+				// document.getElementById('order_summary').innerHTML="";
 				
 				// Read gender radio
 				var gender="";
@@ -117,22 +148,25 @@ window.onload = function () {
 					return;
 				}
 				else{
+					customer_details_list.push(submit_form);
+					burgers_list.push(burgers)
 					document.getElementById('success').innerHTML="Success!!";
 				}
 				
-				for(var i in submit_form){
-					var node = document.createElement("div");
-					var textnode = document.createTextNode(i+": "+submit_form[i]);
-					node.appendChild(textnode);
-					document.getElementById('customer_details').appendChild(node);
-				}
+			
+				// for(var i in submit_form){
+					// var node = document.createElement("div");
+					// var textnode = document.createTextNode(i+": "+submit_form[i]);
+					// node.appendChild(textnode);
+					// document.getElementById('customer_details').appendChild(node);
+				// }
 				
-				for(var i=0; i<burgers.length; i++){
-					var node = document.createElement("li");
-					var textnode = document.createTextNode(burgers[i]);
-					node.appendChild(textnode);
-					document.getElementById('order_summary').appendChild(node);
-				}
+				// for(var i=0; i<burgers.length; i++){
+					// var node = document.createElement("li");
+					// var textnode = document.createTextNode(burgers[i]);
+					// node.appendChild(textnode);
+					// document.getElementById('order_summary').appendChild(node);
+				// }
 
 				
 				var map = document.getElementById('map');
@@ -140,6 +174,7 @@ window.onload = function () {
 				var left_x = style.getPropertyValue('left');
 				var top_y = style.getPropertyValue('top');
 				socket.emit("addOrder", {
+										id:socket.id,
 										details: { x: parseFloat(left_x),
 												   y: parseFloat(top_y) },
 										orderItems: burgers,
