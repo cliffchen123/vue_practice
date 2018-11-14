@@ -98,7 +98,7 @@
 					<tr><th><h3>Customer details</h3></th></tr>
 					<tr id="customer_details">
 						<th v-for="(item,key) in items">
-							<div>#{{key+1}}</div>
+							<div>#{{key+1}} <div id='mode'>{{  item.mode  }}</div></div>
 							<div>fullname: {{  item.fullname  }}</div>
 							<div>email: {{  item.email  }}</div>
 							<div>payment: {{  item.payment  }}</div>

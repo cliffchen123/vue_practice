@@ -40,6 +40,8 @@ function Data() {
   Adds an order to to the queue
 */
 Data.prototype.addOrder = function (order) {
+	order.idx=this.orders.length;
+	
   //Store the order in an "associative array" with orderId as key
   this.orders.push(order);
 };
@@ -58,6 +60,10 @@ Data.prototype.getOrderById = function (id) {
   return order;
 };
 
+Data.prototype.change_mode = function (id,mode) {
+  this.orders[id].mode = mode;
+};
+
 var data = new Data();
 
 io.on('connection', function (socket) {
@@ -70,10 +76,18 @@ io.on('connection', function (socket) {
     // send updated info to all connected clients, note the use of io instead of socket
     io.emit('currentQueue', { orders: data.getAllOrders() });
 	
-	// 
+	// send order to client
 	socket.emit('ordersMenu', { orders: data.getOrderById(order.id) });	
   });
 
+  socket.on('change_mode', function (item) {
+	data.change_mode(item.id,item.mode);
+	console.log(item.id);
+	console.log(item.mode);
+	io.emit('mode', { idx:item.id, mode:item.mode });	
+  });  
+  
+  
 });
 
 var server = http.listen(app.get('port'), function () {

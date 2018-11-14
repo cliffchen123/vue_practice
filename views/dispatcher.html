@@ -13,8 +13,18 @@
   <div id="orders">
     <div id="orderList">
       <div v-for="(order, key) in orders">
-        <div>#{{ key+1 }}: {{ order.orderItems.join(", ") }}</div>
-		<i>{{ order.fullname }}( {{ order.email }}, {{  order.payment  }}, {{  order.gender  }})</i>
+		<table>
+			<tr>
+				<th>
+					<div>#{{ key+1 }}: {{ order.orderItems.join(", ") }}</div>
+					<i>{{ order.fullname }}( {{ order.email }}, {{  order.payment  }}, {{  order.gender  }})</i>
+				</th>
+				<th>
+					<button v-on:click="finish_button(key)" v-bind:id="'finish_button'+key" >Finish</button>
+					<button v-on:click="prepare_button(key)" v-bind:id="'prepare_button'+key" disabled>Preparing</button>
+				</th>
+			</tr>
+		</table>
       </div>
     </div>
     <div id="dots">

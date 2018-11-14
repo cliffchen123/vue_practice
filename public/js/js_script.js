@@ -81,6 +81,14 @@ window.onload = function () {
 			socket.on('ordersMenu', function (data) {
 				this.items = data.orders;
 			}.bind(this));
+			
+			socket.on('mode', function (data) {
+				for(var i=0;i<this.items.length;i++){
+					if(this.items[i].idx==data.idx){
+						this.items[i].mode = data.mode;
+					}
+				}
+			}.bind(this));
 		}
 
 	});	
@@ -181,8 +189,8 @@ window.onload = function () {
 										fullname: submit_form.fullname,
 										gender: submit_form.gender,
 										email: submit_form.email,
-										payment: submit_form.payment
-										
+										payment: submit_form.payment,
+										mode:"preparing"
 									  });			
 				
 				
